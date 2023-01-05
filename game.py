@@ -19,13 +19,16 @@ class Block:
         self.x = x
         self.y = y
         self.value = None # value be start, stop, block or none
-        self.button = tk.Button(play_area, image = btn_img, text='', bg='white', width = 50, height=50)
+        self.button = tk.Button(play_area, image = btn_img, text='', bg='white', width = 50, height=50, command=self.change_block)
         self.button.grid(row=x, column=y)
     
     def reset(self):
         self.button.configure(text='', bg='white')
         self.value = None
 
+    def change_block(self):
+        self.button.configure(bg=func_colors[var.get()])
+        print(var.get())
 # Generating a grid in the play area
 for x in range(1, 11):
     for y in range(1, 11):
@@ -36,20 +39,32 @@ for x in range(1, 11):
 selection_area = tk.Frame(root)
 selection_area.grid(row=0, column=1, padx=10, pady=10)
 
-v = tk.IntVar()
+var = tk.IntVar()
 
 # Dictionary to create multiple buttons
 func_values = {
+    "reset" : 0,
     "start": 1,
     "stop" : 2,
-    "brick" : 3,
-    "reset" : 4
+    "brick" : 3
 }
 
+func_colors = {
+    0: 'white',
+    1: "red",
+    2: "green",
+    3: 'black'
+}
+
+def change_block_func():
+    selection = "Block function: " + str(var.get())
+    label.config(text = selection)
+
 for (text, value) in func_values.items():
-    tk.Radiobutton(selection_area, text=text, variable=v, value=value).pack()
+    tk.Radiobutton(selection_area, text=text, variable=var, value=value, command=change_block_func).pack()
 
-
+label = tk.Label(selection_area)
+label.pack()
 
 
 
