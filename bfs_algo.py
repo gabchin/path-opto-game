@@ -1,15 +1,6 @@
 # Importing neccessary libraries
 from collections import deque 
 
-# Inputs
-adjacent_graph = {
-    0: [1,2],
-    1: [3,4],
-    2: [5,6]
-}
-s = 0
-e = 6
-
 # Algos
 def get_prev_node(start, graph):
     # Finding the number of nodes in graph
@@ -36,17 +27,38 @@ def get_prev_node(start, graph):
 
     return prev_node
 
+def reconstruct_path(start, end, prev):
+    path = []
+    node = end
+    
+    while node!= None:
+        path.append(node)
+        node = prev[node]
+
+    path.reverse()
+
+    if path[0]==start:
+        return path
+    return []
+
 
 def find_shortest_path(start, end, graph):
 
     # Generating all previous node to all nodes in graph
     prev = get_prev_node(start, graph)
-    print(prev)
 
-
-    # # Reconstructing path from start to end node
-    # return reconstruct_path(start, end, prev)
+    # Reconstructing path from start to end node
+    return reconstruct_path(start, end, prev)
 
 
 # Running algo
-find_shortest_path(s, e, adjacent_graph)
+adjacent_graph = {
+    0: [1,2],
+    1: [3,4],
+    2: [5,6],
+    4: [5]
+}
+s = 4
+e = 5
+
+print(find_shortest_path(s, e, adjacent_graph))
