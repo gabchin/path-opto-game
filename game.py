@@ -1,5 +1,6 @@
 # Importing libraries 
 import tkinter as tk
+import numpy as np
 
 # Initializing window
 root = tk.Tk()
@@ -9,6 +10,9 @@ root.title('Maze Path Finder')
 # Initializing play area
 play_area = tk.Frame(root, width=800, height=500, bg="white")
 play_area.grid(row=0, column=0, padx=10, pady=10)
+
+# Intialize array for tracking
+block_map = np.zeros((10,10)) 
 
 # Invisible 1x1 pixel to make button square
 btn_img = tk.PhotoImage("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
@@ -28,10 +32,11 @@ class Block:
 
     def change_block(self):
         self.button.configure(bg=func_colors[var.get()])
-        print(var.get())
+        block_map[self.x][self.y] = var.get()
+
 # Generating a grid in the play area
-for x in range(1, 11):
-    for y in range(1, 11):
+for x in range(10):
+    for y in range(10):
         Block(x, y)
 
 
@@ -58,13 +63,16 @@ func_colors = {
 
 def change_block_func():
     selection = "Block function: " + str(var.get())
-    label.config(text = selection)
 
 for (text, value) in func_values.items():
     tk.Radiobutton(selection_area, text=text, variable=var, value=value, command=change_block_func).pack()
 
-label = tk.Label(selection_area)
-label.pack()
+def find_path():
+    print(block_map)
+
+run_btn = tk.Button(selection_area, text="RUN b0ss!", command=find_path)
+run_btn.pack()
+
 
 
 
