@@ -66,15 +66,3 @@ def explore_neighbour(x, y, map, explored, row, col,  x_queue, y_queue):
 
         # Mark valid coordiate as explored.
         explored[yy][xx] = True
-
-
-print(bfs_shortest_path(x_start, y_start))
-
-        
-    
-
-
-
-
-
-
